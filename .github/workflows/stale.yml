@@ -23,7 +23,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         days-before-issue-stale: 60
         stale-issue-label: 'no-issue-activity'
-        stale-issue-message: > 
+        stale-issue-message: >
           This issue is stale because it has been open for 60 days with no activity.
           It will be closed if no further activity occurs. Thank you.
         days-before-pr-stale: 365
@@ -31,3 +31,8 @@ jobs:
         stale-pr-message: >
           This PR is stale because it has been open for 365 days with no activity.
           It will be closed if no further activity occurs. Thank you.
+    - name: Upload strace artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: strace-logs-${{ github.job }}-${{ matrix.flavor || 'lint' }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ strategy.job-index || 0 }}
+        path: /home/runner/strace_logs/
